@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Library Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+            margin: 0;
+      padding: 0;
+            background-color: #c7b5b5;
+           
+        }
+         
+        .head {
+       background: rgb(104, 0, 0);
+     padding: 20px;
+     text-align: center;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      color: #fff;    
+    } .footer{
+        text-align: center;
+        font-size: x-small;
+    }
+
+        .container {
+     display: flex;
+    justify-content: space-around;
+       padding: 20px; }
+
+.book-list, .add-book, .search-books {
+       background-color: #bb6b6b;
+      padding: 20px;
+    border: 1px solid #ffffff;
+        margin: 2px;
+     border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    h2 {
+            margin-top: 0;}
+  ul {
+            list-style: none;
+            padding: 0; }
+
+    li {
+            margin-bottom: 10px;
+        }
+
+    form input, form button, input[type="text"] {
+            width: 100%;
+       padding: 10px;
+      margin: 5px 0;
+    border: 1px solid #3f060696;
+    border-radius: 5px;
+        }
+
+   button {
+        background-color: #1382f8;
+      color: #fff;
+    border: none;
+ padding: 6px 15px;
+   border-radius: 7px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #bbccdf;
+        }
+    </style>
+</head>
+<body>
+    
+    <div>
+        <h2 class="head">
+            ONLINE LIBRARY MANAGEMENT SYSTEM
+        </h2>
+    </div>
+    <div class="container">
+        <div class="book-list">
+      <h4 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;">Book List :</h4>
+  <ul id="book-list">
+      <p>1. Rich Dad Poor Dad by Robert Kiyosaki  </p>
+  
+   <p>2. Shoe Dog by Phil Knight  </p>
+ <p>3. The Hard Thing About Hard Things by Ben Horowitz  </p>
+        
+            </ul>
+        </div>
+        <div class="add-book">
+            <h4 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;">Add New Book : </h4>
+            <form id="add-book-form">
+    <h5> Enter title :</h5>
+     <input type="text" id="title" placeholder=" Enter Book Title..." required>
+    <h5> Author Name:</h5>
+       <input type="text" id="author" placeholder="Enter Author name..." required>
+                <button type="submit">Add</button>
+  </form>
+        </div>
+        <div class="search-books">
+      <h4 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;">Search Books:</h4>
+            <input type="text" id="search-input" placeholder="Search by Title or Author">
+   <button id="search-button">Search</button>
+        </div>
+        
+    </div>
+    <div class="footer">
+        Creater by: @Maazkhan 
+
+    </div>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+       
+        const books = [
+    { title: '1. Rich Dad Poor', author: 'Robert Kiyosaki ' },
+    { title: '2. Shoe Dog ', author: ' Phil Knight' },
+     { title: '3.The Hard Thing About Hard Things', author: 'Ben Horowitz' },
+        ];
+    
+        const bookList = document.getElementById('book-list');
+   const addBookForm = document.getElementById('add-book-form');
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
+    
+       
+        function displayBooks() {
+    bookList.innerHTML = '';
+      books.forEach(book => {
+     const li = document.createElement('li');
+ li.textContent = `${book.title} by ${book.author}`;
+    bookList.appendChild(li);
+            });
+        }
+    
+        
+  addBookForm.addEventListener('submit', function (e) {
+     e.preventDefault();
+    
+    const title = document.getElementById('title').value;
+   const author = document.getElementById('author').value;
+      
+  const isDuplicate = books.some(book => book.title === title && book.author === author);
+      if (!isDuplicate) {
+   books.push({ title, author });
+   displayBooks();
+   addBookForm.reset();
+      } else {
+      alert('This book already exists in the library.');
+     }
+        });
+        searchButton.addEventListener('click', function () {
+   const searchTerm = searchInput.value.toLowerCase();
+    
+     if (searchTerm) {
+     const filteredBooks = books.filter(book =>
+      book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)
+                );
+      bookList.innerHTML = '';
+  filteredBooks.forEach(book => {
+ const li = document.createElement('li');
+      li.textContent = `${book.title} by ${book.author}`;
+    bookList.appendChild(li);
+    });
+  } else {
+     displayBooks();
+       }
+        });  
+        displayBooks();
+    }); 
+</script>
+    
+   
+</body>
+</html>
